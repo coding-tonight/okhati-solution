@@ -1,17 +1,20 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
+import {
+  Box,
+  AppBar,
+  Toolbar,
+  Avatar,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  Tooltip,
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { LogoWithText } from "../libs";
+import { useEffect } from "react";
 
 const pages = ["Okhati Clinic Suite", "Okhati Booking", "About Us"];
 const settings = ["Profile", "Logout"];
@@ -23,6 +26,13 @@ const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const [username, setUserName] = React.useState<string | null>(null);
+
+  // fetching username
+  useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUserName(user?.email.split("@"));
+  }, []);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -37,6 +47,11 @@ const Navbar = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const Logout = () => {
+    sessionStorage.clear();
+    window.location.reload();
   };
 
   return (
@@ -129,7 +144,10 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Pawan" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt={username ? username[0] : ""}
+                  src="/static/images/avatar/2.jpg"
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -150,7 +168,12 @@ const Navbar = () => {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography
+                    textAlign="center"
+                    onClick={setting === "Logout" ? Logout : ""}
+                  >
+                    {setting}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
