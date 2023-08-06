@@ -51,3 +51,29 @@ Hints: Use material design for the [ui](https://material-ui.com/) and feel free 
 ### [6] Docker
 
 - Make the app run in the docker
+
+### Task [1] 
+
+-Login form include all  the  required field   mention above 
+
+-It include validatation and this time i made decision not use validatation library such as Zod 
+
+-It also show success message after  user registration  and navigate to login page
+
+-Register user data is data  at the localstorage 
+
+
+###  Task [2] 
+
+-login include  confirma password and min 9 character's validatation as mention
+- After login it show success  message and create session when is  store at the sessionstorage
+-after user is login register and login are not accessable which is only by guest 
+
+
+
+github profile link: https://github.com/coding-tonight
+
+github profile repository link: https://github.com/coding-tonight/okhati-solution
+
+
+
