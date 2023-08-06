@@ -6,12 +6,19 @@ import Header from "../components/Header";
 import "../assets/css/App.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ChangeEvent, useState, useEffect, FormEvent } from "react";
+import ToastServive from "react-material-toast";
 
 type UserInput = {
   email: string;
   password: string;
   confirm_password: string;
 };
+
+const toast = ToastServive.new({
+  place: "topRight",
+  duration: 2,
+  maxCount: 8,
+});
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<UserInput | null>(null);
@@ -65,6 +72,15 @@ const Register: React.FC = () => {
         status: 0,
       })
     );
+
+    if (localStorage.getItem("user")) {
+      const id = toast.success("Sucessfully  Register!");
+    }
+
+    setTimeout(() => {
+      toast.removeAll();
+    }, 3000);
+
     navigate("/login");
   };
 
